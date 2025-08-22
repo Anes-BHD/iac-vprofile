@@ -11,28 +11,27 @@ module "eks" {
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
-
   }
 
   eks_managed_node_groups = {
     one = {
       name = "node-group-1"
-
       instance_types = ["t3.small"]
-
       min_size     = 1
       max_size     = 3
       desired_size = 2
+      # Add depends_on to ensure cluster is ACTIVE before node group creation
+      depends_on = [module.eks.eks_cluster]
     }
 
     two = {
       name = "node-group-2"
-
       instance_types = ["t3.small"]
-
       min_size     = 1
       max_size     = 2
       desired_size = 1
+      # Add depends_on to ensure cluster is ACTIVE before node group creation
+      depends_on = [module.eks.eks_cluster]
     }
   }
   ##
