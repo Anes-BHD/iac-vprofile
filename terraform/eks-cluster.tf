@@ -10,6 +10,10 @@ module "eks" {
 
   cluster_endpoint_public_access = true
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   # Disable encryption
   create_kms_key            = false
   cluster_encryption_config = []
