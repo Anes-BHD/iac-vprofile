@@ -10,12 +10,18 @@ module "eks" {
 
   cluster_endpoint_public_access = true
 
+<<<<<<< HEAD
   # Ensure Terraform waits until the cluster is ACTIVE
   wait_for_cluster_timeout = "20m"
 
   create_cloudwatch_log_group = false
   create_kms_key              = false
   cluster_encryption_config   = []
+=======
+  # Disable encryption
+  create_kms_key            = false
+  cluster_encryption_config = []
+>>>>>>> 3c292e83ecd8983871aca9c0097fc5595a5e79d4
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
