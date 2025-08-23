@@ -10,10 +10,10 @@ module "eks" {
 
   cluster_endpoint_public_access = true
 
-
   # Disable log group creation
   create_cloudwatch_log_group = false
-  
+
+
   # Disable encryption
   create_kms_key            = false
   cluster_encryption_config = []
