@@ -10,6 +10,10 @@ module "eks" {
 
   cluster_endpoint_public_access = true
 
+  # Disable encryption
+  create_kms_key            = false
+  cluster_encryption_config = []
+
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
   }
@@ -18,19 +22,21 @@ module "eks" {
     one = {
       name           = "node-group-1"
       instance_types = ["t3.small"]
+      min_size       = 1
+      max_size       = 3
+      desired_size   = 2
 
-      min_size     = 1
-      max_size     = 3
-      desired_size = 2
+      depends_on = [module.eks.cluster_id]
     }
 
     two = {
       name           = "node-group-2"
       instance_types = ["t3.small"]
+      min_size       = 1
+      max_size       = 2
+      desired_size   = 1
 
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
+      depends_on = [module.eks.cluster_id]
     }
   }
 }
