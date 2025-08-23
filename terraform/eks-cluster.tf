@@ -1,29 +1,27 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.8.5"
+  version = "19.19.1"
 
   cluster_name    = local.cluster_name
   cluster_version = "1.27"
 
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
-
+  vpc_id                         = module.vpc.vpc_id
+  subnet_ids                     = module.vpc.private_subnets
   cluster_endpoint_public_access = true
 
-  # Ensure Terraform waits until the cluster is ACTIVE
-  wait_for_cluster_timeout = "20m"
+  eks_managed_node_group_defaults = {
+    ami_type = "AL2_x86_64"
 
+  }
+  
   create_cloudwatch_log_group = false
   create_kms_key              = false
   cluster_encryption_config   = []
 
-  eks_managed_node_group_defaults = {
-    ami_type = "AL2_x86_64"
-  }
-
   eks_managed_node_groups = {
     one = {
-      name           = "node-group-1"
+      name = "node-group-1"
+
       instance_types = ["t3.small"]
 
       min_size     = 1
@@ -32,7 +30,8 @@ module "eks" {
     }
 
     two = {
-      name           = "node-group-2"
+      name = "node-group-2"
+
       instance_types = ["t3.small"]
 
       min_size     = 1
